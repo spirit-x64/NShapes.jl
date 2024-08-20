@@ -6,7 +6,6 @@ on:
     path:
       - src/**
       - docs/**
-      - README.md
 jobs:
   deploy:
     name: Deploy-Documentation
