@@ -6,6 +6,8 @@ version = "1.0.0-DEV"
 
 [compat]
 julia = "1"
+Aqua = "0.8"
+Test = "1"
 
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
