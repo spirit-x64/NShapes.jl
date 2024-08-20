@@ -1,0 +1,6 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+NShapes = "97e3950c-66f8-4045-a0e7-438c70f7ae40"
+
+[compat]
+Documenter = "1.5"
