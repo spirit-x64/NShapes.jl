@@ -10,7 +10,7 @@ makedocs(;
     format=Documenter.HTML(;
         canonical="https://spirit-x64.github.io/NShapes.jl",
         edit_link="main",
-        assets=String[],
+        assets=["assets/icon.svg"],
     ),
     pages=[
         "Home" => "index.md",
