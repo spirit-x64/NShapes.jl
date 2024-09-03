@@ -36,3 +36,98 @@ using Pkg; Pkg.add("https://github.com/spirit-x64/NShapes.jl")
 
 ## License
 All code licensed under the [MIT license][license].
+
+## structs:
+```
+AbstractTransformation{D}
+├── Transformation{D}
+├── Translation{D}
+├── Rotation{D}
+└── Scaling{D}
+
+Linear{D}
+├── Line{D}
+├── LineSegment{D}
+└── Ray{D}
+
+Shape{D}
+├── PrimitiveShape{D}
+│   ├── NSphere{D}
+│   └── Polytope{D}
+│       ├── ArbitraryPolytope{D} - a raw vertices type for exporting purposes
+│       ├── ConvexPolytope{D, S} - S = number of sides
+│       └── ConcavePolytope{D, S} - S = number of sides
+└── ComplexShape{D}
+    ├── BendedShape{D}
+    ├── TwistedShape{D}
+    ├── AbstractExtrudedShape{D, Linear|Shape}
+    │   ├── ExtrudedShape{D, Linear|Shape} - Can represent Cylinder and Prism like shapes
+    │   └── TaperExtrudedShape{D, Linear|Shape} - type of ExtrudedShape but for Cone and Pyramid like shapes
+    └── CompositeShape{D, Shape, Shape}
+        ├── UnionShape{D, Shape, Shape}
+        ├── IntersectShape{D, Shape, Shape}
+        ├── SubtractShape{D, Shape, Shape}
+        └── DifferenceShape{D, Shape, Shape}
+
+Space{D}
+├── InfiniteSpace{D}
+└── ShapedSpace{D, Linear{D}|Shape{D}}
+```
+
+## operations:
+```
+Boolean
+├── union(Shape, Shape) - alias `∪`
+├── intersect(Shape, Shape) - alias `∩`
+├── subtract(Shape, Shape)
+└── difference(Shape, Shape)
+
+Transformations
+├── translate(Shape, Translation)
+├── rotate(Shape, Rotation)
+├── scale(Shape, Scaling)
+├── extrude(Shape, Vector, [Taper])
+├── bend(Shape, Vector)
+├── twist(Shape, Vector)
+├── reflect(Shape, Shape)
+└── shear(Shape, Shape)
+
+Mesurements
+├── volume(Shape)
+├── surface(Shape)
+├── area(Shape{2})
+├── perimeter(Shape{2})
+├── length(Linear)
+├── distance²(Point, Point)
+└── distance(Point, Point)
+
+Queries
+├── iscontained(Shape, Shape)
+├── isintersected(Shape, Shape)
+├── isoverlapped(Shape, Shape)
+├── isdistant(Shape, Shape)
+├── isconvex(Shape)
+├── isregular(Shape)
+├── isclockwise(Shape{2})
+├── closestpoint(Shape, Vector)
+├── projection(Shape, Vector)
+├── centroid(Shape)
+└── normal(Shape)
+
+Bounding volumes
+├── convexhull(Shape)
+├── boundingbox(Shape)
+└── boundingsphere(Shape)
+
+Tessellation and Simplification
+├── simplify(Shape, tolerance)
+├── decompose(CompositeShape; recursive=false)
+├── tessellate(Shape, resolution)
+└── voxelize(Shape, resolution) - pixelize(Shape{2}, resolution)
+
+Space
+├── ShortestPath(Space, Point, Point)
+├── collisions(Space)
+├── isvisible(Space, Shape, Point|Linear|Shape)
+└── visibilitygraph(Space)
+```
