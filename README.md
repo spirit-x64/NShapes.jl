@@ -102,10 +102,11 @@ Mesurements
 └── distance(Point, Point)
 
 Queries
-├── iscontained(Shape, Shape)
-├── isintersected(Shape, Shape)
-├── isoverlapped(Shape, Shape)
+├── iscontaining(Shape, Shape)
+├── isintersecting(Shape, Shape)
+├── isoverlapping(Shape, Shape)
 ├── isdistant(Shape, Shape)
+├── isdegenerate(Linear)
 ├── isconvex(Shape)
 ├── isregular(Shape)
 ├── isclockwise(Shape{2})
