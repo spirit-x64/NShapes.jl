@@ -1,11 +1,21 @@
+total_time = time()
+
 using NShapes
 using Test
 using Aqua
 
+println("loading dependencies took $(time() - total_time) seconds")
+
 @testset "NShapes.jl" begin
+    aqua_time = time()
+    println("Testing Code quality (Aqua.jl)")
     @testset "Code quality (Aqua.jl)" begin
         Aqua.test_all(NShapes; unbound_args = false)
     end
+    println("Code quality tests took $(time() - aqua_time) seconds")
+
+    math_time = time()
+    println("Testing math.jl")
     @testset "math.jl" begin
         @testset "distance² and distance" begin
             @test distance²(()) ≈ 0 # empty tuple
@@ -56,4 +66,7 @@ using Aqua
             @test NShapes.det((Inf, 0), (0, 1)) |> isinf
         end
     end
+    println("math.jl tests took $(time() - math_time) seconds")
 end
+
+println("Total test time: $(time() - total_time) seconds")
