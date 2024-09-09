@@ -28,7 +28,7 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test distance((), ()) ≈ 0 # empty tuples
             @test distance((3, 4)) ≈ 5 # magnitude
             @test distance((1, 1), (4, 5)) ≈ 5 # distance
-            @test distance((-1, -1), (1, 1)) ≈ 2√2 # fractional distance
+            @test distance((-1, -1), (1, 1)) ≈ 2 * √2 # fractional distance
             @test distance((0, 0, 0)) ≈ 0 # zero magnitude
             @test distance((1, 2, 3), (1, 2, 3)) ≈ 0 # zero distance (same point)
         end
