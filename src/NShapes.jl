@@ -18,6 +18,8 @@ Space4D = Space{4}
 Space3D = Space{3}
 Space2D = Space{2}
 
-export distance², distance
+export
+    # math
+    distance², distance, normalize
 
 end

@@ -10,7 +10,7 @@ println("loading dependencies took $(time() - total_time) seconds")
     aqua_time = time()
     println("Testing Code quality (Aqua.jl)")
     @testset "Code quality (Aqua.jl)" begin
-        Aqua.test_all(NShapes; unbound_args = false)
+        Aqua.test_all(NShapes; unbound_args=false)
     end
     println("Code quality tests took $(time() - aqua_time) seconds")
 
@@ -31,6 +31,13 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test distance((-1, -1), (1, 1)) ≈ 2 * √2 # fractional distance
             @test distance((0, 0, 0)) ≈ 0 # zero magnitude
             @test distance((1, 2, 3), (1, 2, 3)) ≈ 0 # zero distance (same point)
+        end
+        @testset "normalize" begin
+            @test normalize(()) == () # empty tuple
+            @test normalize((), ()) == () # empty tuples
+            @test normalize((1, 0, 0)) == (1, 0, 0) # normalize vector
+            @test normalize((1, 1, 1, 1), (2, 3, 4, 5)) == (1 / √30, 2 / √30, 3 / √30, 4 / √30) # normalize vector from origin
+            @test normalize((-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)) == (1 / √3, 1 / √3, 1 / √3) # fractional normalize
         end
         @testset "norm" begin
             @test NShapes.norm(()) ≈ 0 # empty tuple

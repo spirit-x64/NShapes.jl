@@ -99,7 +99,8 @@ Mesurements
 ├── perimeter(Shape{2})
 ├── length(Linear)
 ├── distance²(Point, Point)
-└── distance(Point, Point)
+├── distance(Point, Point)
+└── normalize(Point)
 
 Queries
 ├── iscontaining(Shape, Shape)

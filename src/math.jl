@@ -17,6 +17,17 @@ const distance_sq = distance²
 @inline distance(Δ) = √distance²(Δ)
 @inline distance(a, b) = √distance²(a, b)
 
+# normalize(Δ)
+# normalize(Point, Point)
+
+@inline normalize(v::NTuple{D,T}) where {D,T<:Number} = v ./ distance(v)
+@inline function normalize(a::NTuple{D,T}, b::NTuple{D,T}) where {D,T<:Number}
+    v = b .- a
+    v ./ distance(v)
+end
+@inline normalize(::Tuple{}) = ()
+@inline normalize(::Tuple{}, ::Tuple{}) = ()
+
 # internal usage
 
 @inline norm(Δ::Tuple{Vararg{T}}) where {T<:Number} = reduce((i, j) -> i + abs(j), Δ; init=zero(T))
