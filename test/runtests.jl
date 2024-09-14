@@ -74,6 +74,42 @@ println("loading dependencies took $(time() - total_time) seconds")
         end
     end
     println("math.jl tests took $(time() - math_time) seconds")
+    linear_time = time()
+    @testset "Linear" begin
+        for L in (Line, LineSegment, Ray)
+            @test L((), ()) isa L{0,Union{}}
+            @test L((1, 2), (3, 4)) isa L{2,Int}
+            @test L((1, 2), (3.0, 4.0)) isa L{2,Float64} # type promotion tuple level
+            @test L((1, 2), (3, 4.0)) isa L{2,Real} # type promotion element level
+
+            l = L((0, 0), (1, 1))
+            l2 = convert(L{2,Float64}, l)
+            @test convert(L{2,Int}, l) === l
+            @test l2 isa L{2,Float64}
+            @test l2.origin == (0.0, 0.0)
+            @test l2.vector == (1.0, 1.0)
+
+            l = L((0, 0), (1, 1))
+            @test l[1] == (0, 0)
+            @test l[2] == (1, 1)
+            @test_throws BoundsError l[3]
+            @test length(l) == 2
+            @test collect(l) == [(0, 0), (1, 1)]
+            @test length(collect(l)) == 2
+            @test collect(L((), ())) == [(), ()] # 0D
+        end
+        @test convert(Line{2,Int}, LineSegment((1.0, 2.0), (3.0, 4.0))) isa Line{2,Int}
+        @test convert(Line{2,Int}, Ray((1.0, 2.0), (3, 4))) isa Line{2,Int}
+        @test convert(LineSegment{2,Int}, Line((1.0, 2), (3, 4))) isa LineSegment{2,Int}
+        @test convert(LineSegment{2,Int}, Ray((1.0, 2.0), (3, 4.0))) isa LineSegment{2,Int}
+        @test convert(Ray{2,Int}, Line((1, 2), (3, 4))) isa Ray{2,Int}
+        @test convert(Ray{2,Int}, LineSegment((1, 2), (3, 4))) isa Ray{2,Int}
+
+        @test sprint(show, Line((0, 0), (1, 1))) == "<(0, 0)↔(1, 1)>"
+        @test sprint(show, LineSegment((0, 0), (1, 1))) == "<(0, 0)―(1, 1)>"
+        @test sprint(show, Ray((0, 0), (1, 1))) == "<(0, 0)→(1, 1)>"
+    end
+    println("Linear tests took $(time() - linear_time) seconds")
 end
 
 println("Total test time: $(time() - total_time) seconds")

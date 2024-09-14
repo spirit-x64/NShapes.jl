@@ -4,6 +4,8 @@ module NShapes
 
 include("./math.jl")
 
+include("./Linear.jl")
+
 abstract type Shape{D} end
 abstract type PrimitiveShape{D} <: Shape{D} end
 abstract type ComplexShape{D} <: Shape{D} end
@@ -20,6 +22,8 @@ Space2D = Space{2}
 
 export
     # math
-    distance², distance, normalize
+    distance², distance, normalize,
+    # Linear
+    Linear, Line, LineSegment, Ray
 
 end

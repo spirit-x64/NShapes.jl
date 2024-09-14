@@ -45,10 +45,10 @@ AbstractTransformation{D}
 ├── Rotation{D}
 └── Scaling{D}
 
-Linear{D}
-├── Line{D}
-├── LineSegment{D}
-└── Ray{D}
+Linear{D,T}
+├── Line{D,T}
+├── LineSegment{D,T}
+└── Ray{D,T}
 
 Shape{D}
 ├── PrimitiveShape{D}
