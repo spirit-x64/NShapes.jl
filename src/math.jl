@@ -5,8 +5,8 @@
 # distance²(Δ)
 # distance²(Point, Point)
 
-@inline distance²(Δ::Tuple{Vararg{T}}) where {T<:Number} = reduce((i, j) -> i + j^2, Δ; init=zero(T))
-@inline distance²(a::NTuple{D,T}, b::NTuple{D,T}) where {D,T<:Number} = reduce((i, j) -> i + j^2, b .- a; init=zero(T))
+@inline distance²(Δ::Tuple{Vararg{Number}}) = reduce((i, j) -> i + j^2, Δ; init=zero(eltype(Δ)))
+@inline distance²(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D} = reduce((i, j) -> i + j^2, b .- a; init=zero(eltype(a)))
 @inline distance²(::Tuple{}) = 0
 @inline distance²(::Tuple{}, ::Tuple{}) = 0
 const distance_sq = distance²
@@ -20,8 +20,8 @@ const distance_sq = distance²
 # normalize(Δ)
 # normalize(Point, Point)
 
-@inline normalize(v::NTuple{D,T}) where {D,T<:Number} = v ./ distance(v)
-@inline function normalize(a::NTuple{D,T}, b::NTuple{D,T}) where {D,T<:Number}
+@inline normalize(v::NTuple{D,Number}) where {D} = v ./ distance(v)
+@inline function normalize(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D}
     v = b .- a
     v ./ distance(v)
 end
