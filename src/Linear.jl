@@ -12,9 +12,9 @@ struct Line{D,T<:Number} <: Linear{D,T}
     last_point::NTuple{D,T}
 end
 Line(::Tuple{}, ::Tuple{}) = Line{0,Union{}}((), ())
-function Line(o::NTuple{D,Number}, v::NTuple{D,Number}) where {D}
-    T = promote_type(eltype(o), eltype(v))
-    Line{D,T}(convert(NTuple{D,T}, o), convert(NTuple{D,T}, v))
+function Line(p1::NTuple{D,Number}, p2::NTuple{D,Number}) where {D}
+    T = promote_type(eltype(p1), eltype(p2))
+    Line{D,T}(convert(NTuple{D,T}, p1), convert(NTuple{D,T}, p2))
 end
 
 struct LineSegment{D,T<:Number} <: Linear{D,T}
@@ -32,9 +32,9 @@ struct Ray{D,T<:Number} <: Linear{D,T}
     last_point::NTuple{D,T}
 end
 Ray(::Tuple{}, ::Tuple{}) = Ray{0,Union{}}((), ())
-function Ray(o::NTuple{D,Number}, v::NTuple{D,Number}) where {D}
-    T = promote_type(eltype(o), eltype(v))
-    Ray{D,T}(convert(NTuple{D,T}, o), convert(NTuple{D,T}, v))
+function Ray(p1::NTuple{D,Number}, p2::NTuple{D,Number}) where {D}
+    T = promote_type(eltype(p1), eltype(p2))
+    Ray{D,T}(convert(NTuple{D,T}, p1), convert(NTuple{D,T}, p2))
 end
 
 # overloads
