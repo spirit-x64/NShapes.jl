@@ -86,8 +86,8 @@ println("loading dependencies took $(time() - total_time) seconds")
             l2 = convert(L{2,Float64}, l)
             @test convert(L{2,Int}, l) === l
             @test l2 isa L{2,Float64}
-            @test l2.origin == (0.0, 0.0)
-            @test l2.vector == (1.0, 1.0)
+            @test l2.first_point == (0.0, 0.0)
+            @test l2.last_point == (1.0, 1.0)
 
             l = L((0, 0), (1, 1))
             @test l[1] == (0, 0)
