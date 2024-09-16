@@ -47,6 +47,8 @@ Base.getindex(l::Linear, i::Int) = getfield(l, i)
 Base.length(::Linear) = 2
 
 Base.iterate(l::Linear, i=1) = i > 2 ? nothing : (getfield(l, i), i + 1)
+Base.lastindex(::Linear) = 2
+Base.last(l::Linear) = l.last_point
 
 Base.convert(::Type{Line}, l::Linear) = Line(l.first_point, l.last_point)
 Base.convert(::Type{Line{D,T}}, l::Linear{D}) where {D,T<:Number} = Line{D,T}(l.first_point, l.last_point)
