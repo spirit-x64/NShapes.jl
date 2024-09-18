@@ -65,3 +65,8 @@ end
 
 # divide and return 0 instead of Inf
 @inline div_no_inf(a, b) = (!isinf(a) && !iszero(b)) * (a / b)
+
+# Check if all elements are proportional
+isproportional(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D} = all(i -> a[i] * b[1] == a[1] * b[i], 2:D)
+isproportional(::Tuple{Number}, ::Tuple{Number}) = true
+isproportional(::Tuple{}, ::Tuple{}) = true

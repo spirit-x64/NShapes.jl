@@ -111,6 +111,24 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test NShapes.div_no_inf(NaN, 1) |> isnan
             @test NShapes.div_no_inf(1, NaN) |> isnan
         end
+        @testset "isproportional" begin
+            # always true for 0D and 1D
+            @test NShapes.isproportional((), ())
+            @test NShapes.isproportional((1,), (2,))
+
+            @test NShapes.isproportional((0, 0), (0, 0))
+            @test NShapes.isproportional((0, 0, 0), (0, 0, 0))
+
+            @test NShapes.isproportional((1, -2), (-2, 4))
+            @test NShapes.isproportional((1.0, 2), (2, 4.0))
+
+            @test NShapes.isproportional((1, 2, 3), (2, 4, 6))
+            @test NShapes.isproportional((1, -1, 0, 3), (-2, 2, 0, -6))
+
+            @test !NShapes.isproportional((1, 2), (2, 3))
+            @test !NShapes.isproportional((1, 0), (0, 1))
+            @test !NShapes.isproportional((1, 2, 3), (2, 4, 5))
+        end
     end
     println("math.jl tests took $(time() - math_time) seconds")
     println("Testing Linear")
