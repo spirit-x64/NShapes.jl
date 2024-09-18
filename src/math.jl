@@ -28,6 +28,13 @@ end
 @inline normalize(::Tuple{}) = ()
 @inline normalize(::Tuple{}, ::Tuple{}) = ()
 
+# iscollinear(Vector, Vector)
+iscollinear(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D} = isproportional(a, b)
+iscollinear(a::NTuple{3,Number}, b::NTuple{3,Number}) = all(iszero, cross(a, b))
+iscollinear(a::NTuple{2,Number}, b::NTuple{2,Number}) = iszero(det(a, b))
+iscollinear(::NTuple{1,Number}, ::NTuple{1,Number}) = true
+iscollinear(::Tuple{}, ::Tuple{}) = true
+
 # internal usage
 
 @inline norm(Δ::Tuple{Vararg{Number}}) = reduce((i, j) -> i + abs(j), Δ; init=zero(eltype(Δ)))

@@ -45,6 +45,24 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test normalize((1, 1, 1, 1.0), (2.0, 3, 4, 5)) == (1 / √30, 2 / √30, 3 / √30, 4 / √30) # different types
             @test normalize((-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)) == (1 / √3, 1 / √3, 1 / √3) # fractional normalize
         end
+        @testset "iscollinear" begin
+            @test iscollinear((), ()) # always true
+            @test iscollinear((1,), (2,)) # always true
+
+            @test iscollinear((1, 2), (2, 4))
+            @test iscollinear((1.0, 2.0), (2, 4))  # Different types
+            @test iscollinear((1, 0, -3), (-2, 0, 6))
+            @test iscollinear((4, 4, 4, 4), (1, 1, 1, 1))
+
+            @test iscollinear((0, 0), (0, 0))
+            @test iscollinear((0, 0, 0), (0, 0, 0))
+            @test iscollinear((0, 0, 0, 0), (0, 0, 0, 0))
+
+            @test !iscollinear((1, 2), (2, 3))
+            @test !iscollinear((1, 0, -3), (0, 1, 0))
+            @test !iscollinear((1.0, 2.0, 3.0), (2, 4, 5.0))
+            @test !iscollinear((1.0, 2.0, 3.0, 4), (2, 4, 5, 6))
+        end
         @testset "norm" begin
             @test NShapes.norm(()) ≈ 0 # empty tuple
             @test NShapes.norm((1, 2, 3)) ≈ 6

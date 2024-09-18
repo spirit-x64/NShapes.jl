@@ -22,7 +22,7 @@ Space2D = Space{2}
 
 export
     # math
-    distance², distance, normalize,
+    distance², distance, normalize, iscollinear,
     # Linear
     Linear, Line, LineSegment, Ray
 
