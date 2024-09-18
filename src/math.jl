@@ -46,5 +46,19 @@ end
     (a[1] - c[1]) * (b[2] - c[2]) - (a[2] - c[2]) * (b[1] - c[1])
 end
 @inline function det(a::NTuple{3,Number}, b::NTuple{3,Number}, c::NTuple{3,Number})
-    a[1] * (b[2] * c[3] - b[3] * c[2]) - a[2] * (b[1] * c[3] - b[3] * c[1]) + a[3] * (b[1] * c[2] - b[2] * c[1])
+    a[1] * (b[2] * c[3] - b[3] * c[2]) -
+    a[2] * (b[1] * c[3] - b[3] * c[1]) +
+    a[3] * (b[1] * c[2] - b[2] * c[1])
+end
+
+# 2D cross product (returns a scalar)
+cross(a::NTuple{2,Number}, b::NTuple{2,Number}) = det(a, b)
+
+# 3D cross product (returns a 3D vector)
+function cross(a::NTuple{3,Number}, b::NTuple{3,Number})
+    (
+        a[2] * b[3] - a[3] * b[2],
+        a[3] * b[1] - a[1] * b[3],
+        a[1] * b[2] - a[2] * b[1]
+    )
 end

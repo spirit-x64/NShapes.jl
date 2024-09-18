@@ -78,8 +78,35 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test NShapes.det((1, 0), (0, 0.5)) ≈ 0.5
             @test NShapes.det((Inf, 0), (0, 1)) |> isinf
         end
+        @testset "cross" begin
+            @test NShapes.cross((1, 2), (3, 4)) == -2
+            @test NShapes.cross((-2, 5), (1, -3)) == 1
+            # Zero vectors
+            @test NShapes.cross((0, 0), (1, 2)) == 0
+            @test NShapes.cross((3, 4), (0, 0)) == 0
+            # Collinear vectors
+            @test NShapes.cross((1, 1), (2, 2)) == 0
+            @test NShapes.cross((-3, -6), (1, 2)) == 0
+            # Orthogonal vectors
+            @test NShapes.cross((1, 0), (0, 1)) == 1
+            @test NShapes.cross((0, -1), (1, 0)) == 1
+
+            @test NShapes.cross((1, 2, 3), (4, 5, 6)) == (-3, 6, -3)
+            @test NShapes.cross((-2, 0, 1), (3, -1, 4)) == (1, 11, 2)
+            # Zero vectors
+            @test NShapes.cross((0, 0, 0), (1, 2, 3)) == (0, 0, 0)
+            @test NShapes.cross((3, 4, 5), (0, 0, 0)) == (0, 0, 0)
+            # Collinear vectors
+            @test NShapes.cross((1, 1, 1), (2, 2, 2)) == (0, 0, 0)
+            @test NShapes.cross((-3, -6, -9), (1, 2, 3)) == (0, 0, 0)
+            # Orthogonal vectors (standard basis vectors)
+            @test NShapes.cross((1, 0, 0), (0, 1, 0)) == (0, 0, 1)
+            @test NShapes.cross((0, 1, 0), (0, 0, 1)) == (1, 0, 0)
+            @test NShapes.cross((0, 0, 1), (1, 0, 0)) == (0, 1, 0)
+        end
     end
     println("math.jl tests took $(time() - math_time) seconds")
+    println("Testing Linear")
     linear_time = time()
     @testset "Linear" begin
         for L in (Line, LineSegment, Ray)
