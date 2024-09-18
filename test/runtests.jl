@@ -104,6 +104,13 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test NShapes.cross((0, 1, 0), (0, 0, 1)) == (1, 0, 0)
             @test NShapes.cross((0, 0, 1), (1, 0, 0)) == (0, 1, 0)
         end
+        @testset "div_no_inf" begin
+            @test NShapes.div_no_inf(Inf, 1) == 0 # `a` is Inf
+            @test NShapes.div_no_inf(1, 0) == 0 # Division by zero
+            @test NShapes.div_no_inf(4, 2) == 2 # Normal division
+            @test NShapes.div_no_inf(NaN, 1) |> isnan
+            @test NShapes.div_no_inf(1, NaN) |> isnan
+        end
     end
     println("math.jl tests took $(time() - math_time) seconds")
     println("Testing Linear")

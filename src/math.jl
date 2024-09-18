@@ -62,3 +62,6 @@ function cross(a::NTuple{3,Number}, b::NTuple{3,Number})
         a[1] * b[2] - a[2] * b[1]
     )
 end
+
+# divide and return 0 instead of Inf
+@inline div_no_inf(a, b) = (!isinf(a) && !iszero(b)) * (a / b)
