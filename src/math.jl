@@ -30,8 +30,8 @@ end
 
 # internal usage
 
-@inline norm(Δ::Tuple{Vararg{T}}) where {T<:Number} = reduce((i, j) -> i + abs(j), Δ; init=zero(T))
-@inline norm(a::NTuple{D,T}, b::NTuple{D,T}) where {D,T<:Number} = reduce((i, j) -> i + abs(j), b .- a; init=zero(T))
+@inline norm(Δ::Tuple{Vararg{Number}}) = reduce((i, j) -> i + abs(j), Δ; init=zero(eltype(Δ)))
+@inline norm(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D} = reduce((i, j) -> i + abs(j), b .- a; init=zero(eltype(a)))
 @inline norm(::Tuple{}) = 0
 @inline norm(::Tuple{}, ::Tuple{}) = 0
 
