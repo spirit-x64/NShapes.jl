@@ -152,7 +152,7 @@ println("loading dependencies took $(time() - total_time) seconds")
     println("Testing Linear")
     linear_time = time()
     @testset "Linear" begin
-        for L in (Line, LineSegment, Ray)
+        for L ∈ (Line, LineSegment, Ray)
             @test L((), ()) isa L{0,Union{}}
             @test L((1, 2), (3, 4)) isa L{2,Int}
             @test L((1, 2), (3.0, 4.0)) isa L{2,Float64} # type promotion tuple level
@@ -173,6 +173,27 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test collect(l) == [(0, 0), (1, 1)]
             @test length(collect(l)) == 2
             @test collect(L((), ())) == [(), ()] # 0D
+            for D ∈ 0:4
+                p1, p2 = ntuple(zero, D), ntuple(_ -> 2, D)
+                non_collinear, inner, before, after = ntuple(i -> i, D), ntuple(one, D), p1 .- 1, p2 .+ 0.5
+                l = L(p1, p2)
+
+                @test p1 ∈ l # first endpoint
+                @test p2 ∈ l # last endpoint
+                @test inner ∈ l
+                D >= 2 && @test non_collinear ∉ l
+
+                if l == Line
+                    @test before ∈ l
+                    @test after ∈ l
+                elseif l == LineSegment
+                    @test before ∉ l
+                    @test after ∉ l
+                elseif l == Ray
+                    @test before ∉ l
+                    @test after ∈ l
+                end
+            end
         end
         @test convert(Line{2,Int}, LineSegment((1.0, 2.0), (3.0, 4.0))) isa Line{2,Int}
         @test convert(Line{2,Int}, Ray((1.0, 2.0), (3, 4))) isa Line{2,Int}
