@@ -172,23 +172,23 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test collect(L((), ())) == [(), ()] # 0D
             for D ∈ 0:4
                 p1, p2 = ntuple(zero, D), ntuple(_ -> 2, D)
-                non_collinear, inner, before, after = ntuple(i -> i, D), ntuple(one, D), p1 .- 1, p2 .+ 0.5
+                p_non_collinear, p_inner, p_before, p_after = ntuple(i -> i, D), ntuple(one, D), p1 .- 1, p2 .+ 0.5
                 l = L(p1, p2)
 
                 @test p1 ∈ l # first endpoint
                 @test p2 ∈ l # last endpoint
-                @test inner ∈ l
-                D >= 2 && @test non_collinear ∉ l
+                @test p_inner ∈ l
+                D >= 2 && @test p_non_collinear ∉ l
 
                 if l == Line
-                    @test before ∈ l
-                    @test after ∈ l
+                    @test p_before ∈ l
+                    @test p_after ∈ l
                 elseif l == LineSegment
-                    @test before ∉ l
-                    @test after ∉ l
+                    @test p_before ∉ l
+                    @test p_after ∉ l
                 elseif l == Ray
-                    @test before ∉ l
-                    @test after ∈ l
+                    @test p_before ∉ l
+                    @test p_after ∈ l
                 end
             end
         end
