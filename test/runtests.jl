@@ -38,12 +38,9 @@ println("loading dependencies took $(time() - total_time) seconds")
         end
         @testset "normalize" begin
             @test normalize(()) == () # empty tuple
-            @test normalize((), ()) == () # empty tuples
             @test normalize((1, 0, 0)) == (1, 0, 0) # normalize vector
             @test normalize((1.0, 0, 0)) == (1, 0, 0) # different types
-            @test normalize((1, 1, 1, 1), (2, 3, 4, 5)) == (1 / √30, 2 / √30, 3 / √30, 4 / √30) # normalize vector from origin
-            @test normalize((1, 1, 1, 1.0), (2.0, 3, 4, 5)) == (1 / √30, 2 / √30, 3 / √30, 4 / √30) # different types
-            @test normalize((-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)) == (1 / √3, 1 / √3, 1 / √3) # fractional normalize
+            @test normalize((1, 1, 1)) == (1 / √3, 1 / √3, 1 / √3) # fractional normalize
         end
         @testset "iscollinear" begin
             @test iscollinear((), ()) # always true

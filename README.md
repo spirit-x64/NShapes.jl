@@ -100,7 +100,7 @@ Mesurements
 ├── length(Linear)
 ├── distance²(Point, Point)
 ├── distance(Point, Point)
-└── normalize(Point)
+└── normalize(Vector)
 
 Queries
 ├── iscontaining(Shape, Shape)

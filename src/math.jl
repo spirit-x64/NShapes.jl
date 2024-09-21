@@ -17,16 +17,10 @@ const distance_sq = distance²
 @inline distance(Δ) = √distance²(Δ)
 @inline distance(a, b) = √distance²(a, b)
 
-# normalize(Δ)
-# normalize(Point, Point)
+# normalize(Vector)
 
 @inline normalize(v::NTuple{D,Number}) where {D} = v ./ distance(v)
-@inline function normalize(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D}
-    v = b .- a
-    v ./ distance(v)
-end
 @inline normalize(::Tuple{}) = ()
-@inline normalize(::Tuple{}, ::Tuple{}) = ()
 
 # iscollinear(Vector, Vector)
 iscollinear(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D} = isproportional(a, b)
