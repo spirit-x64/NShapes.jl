@@ -183,6 +183,9 @@ println("loading dependencies took $(time() - total_time) seconds")
                 @test p2 ∈ l # last endpoint
                 @test p_inner ∈ l
 
+                @test reduce(((acc, a), b) -> (acc &= isparallel(a, b), b), (l_floated, l_flipped, l_extended_start, l_extended_end, l_contained); init=(true, l))[1]
+                @test D == 1 ? isparallel(l, l_non_collinear) : !isparallel(l, l_non_collinear)
+
                 if D > 1 # all points are collinear in 1D
                     @test p_non_collinear ∉ l
                 end

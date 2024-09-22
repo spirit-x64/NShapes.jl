@@ -83,3 +83,9 @@ function Base.in(point::NTuple{D,Number}, r::Ray{D}) where {D}
 end
 Base.in(point::NTuple{1,Number}, l::Ray{1}) = l.point1[1] <= point[1]
 Base.in(::Tuple{}, ::Ray{0}) = true
+
+# isparallel(Linear, Linear)
+
+isparallel(a::Linear{D}, b::Linear{D}) where {D} = iscollinear(a.point2 .- a.point1, b.point2 .- b.point1)
+isparallel(::Linear{1}, ::Linear{1}) = true
+isparallel(::Linear{0}, ::Linear{0}) = true

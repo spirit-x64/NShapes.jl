@@ -24,6 +24,8 @@ export
     # math
     distance², distance, normalize, iscollinear,
     # Linear
-    Linear, Line, LineSegment, Ray
+    Linear, Line, LineSegment, Ray,
+    # functions
+    isparallel
 
 end

@@ -108,6 +108,7 @@ Queries
 ├── isoverlapping(Shape, Shape)
 ├── isdistant(Shape, Shape)
 ├── isdegenerate(Linear)
+├── isparallel(Linear, Linear)
 ├── isconvex(Shape)
 ├── isregular(Shape)
 ├── isclockwise(Shape{2})
