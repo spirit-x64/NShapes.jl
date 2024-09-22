@@ -150,27 +150,31 @@ println("loading dependencies took $(time() - total_time) seconds")
     linear_time = time()
     @testset "Linear" begin
         for L ∈ (Line, LineSegment, Ray)
-            @test L((), ()) isa L{0,Union{}}
-            @test L((1, 2), (3, 4)) isa L{2,Int}
-            @test L((1, 2), (3.0, 4.0)) isa L{2,Float64} # type promotion tuple level
-            @test L((1, 2), (3, 4.0)) isa L{2,Real} # type promotion element level
+            p1, p2, p_0D = (0, 0), (1, 1), ()
+            p1_floated, p2_floated, p1_mixed, p2_mixed = (0.0, 0.0), (1.0, 1.0), (0.0, 0), (1, 1.0)
+            l, l_0D = L(p1, p2), L(p_0D, p_0D)
 
-            l = L((0, 0), (1, 1))
+            @test l_0D isa L{0,Union{}}
+            @test l isa L{2,Int}
+            @test L(p1, p2_floated) isa L{2,Float64} # type promotion tuple level
+            @test L(p1, p2_mixed) isa L{2,Real} # type promotion element level
+
             l2 = convert(L{2,Float64}, l)
             @test convert(L{2,Int}, l) === l
             @test l2 isa L{2,Float64}
-            @test l2.point1 == (0.0, 0.0)
-            @test l2.point2 == (1.0, 1.0)
+            @test l2.point1 === p1_floated
+            @test l2.point2 === p2_floated
 
-            l = L((0, 0), (1, 1))
-            @test l[1] == (0, 0)
-            @test l[2] == (1, 1)
+            @test l[1] === p1
+            @test l[2] === p2
             @test_throws BoundsError l[3]
-            @test length(l) == 2
-            @test collect(l) == [(0, 0), (1, 1)]
-            @test length(collect(l)) == 2
-            @test collect(L((), ())) == [(), ()] # 0D
-            for D ∈ 0:4
+            @test length(l) === 2
+            @test collect(l) == [p1, p2]
+            @test length(collect(l)) === 2
+            @test collect(l_0D) == [p_0D, p_0D]
+
+            @test p_0D ∈ l_0D
+            for D ∈ 1:4
                 p1, p2 = ntuple(zero, D), ntuple(_ -> 2, D)
                 p_non_collinear, p_inner, p_before, p_after = ntuple(i -> i, D), ntuple(one, D), p1 .- 1, p2 .+ 0.5
                 l = L(p1, p2)
@@ -178,15 +182,18 @@ println("loading dependencies took $(time() - total_time) seconds")
                 @test p1 ∈ l # first endpoint
                 @test p2 ∈ l # last endpoint
                 @test p_inner ∈ l
-                D >= 2 && @test p_non_collinear ∉ l
 
-                if l == Line
+                if D > 1 # all points are collinear in 1D
+                    @test p_non_collinear ∉ l
+                end
+
+                if L === Line
                     @test p_before ∈ l
                     @test p_after ∈ l
-                elseif l == LineSegment
+                elseif L === LineSegment
                     @test p_before ∉ l
                     @test p_after ∉ l
-                elseif l == Ray
+                elseif L === Ray
                     @test p_before ∉ l
                     @test p_after ∈ l
                 end
