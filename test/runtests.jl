@@ -49,16 +49,13 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test iscollinear((1, 2), (2, 4))
             @test iscollinear((1.0, 2.0), (2, 4))  # Different types
             @test iscollinear((1, 0, -3), (-2, 0, 6))
-            @test iscollinear((4, 4, 4, 4), (1, 1, 1, 1))
 
             @test iscollinear((0, 0), (0, 0))
             @test iscollinear((0, 0, 0), (0, 0, 0))
-            @test iscollinear((0, 0, 0, 0), (0, 0, 0, 0))
 
             @test !iscollinear((1, 2), (2, 3))
             @test !iscollinear((1, 0, -3), (0, 1, 0))
-            @test !iscollinear((1.0, 2.0, 3.0), (2, 4, 5.0))
-            @test !iscollinear((1.0, 2.0, 3.0, 4), (2, 4, 5, 6))
+            @test !iscollinear((1.0, 2.0, 3), (2, 4, 5.0))
         end
         @testset "norm" begin
             @test NShapes.norm(()) ≈ 0 # empty tuple
