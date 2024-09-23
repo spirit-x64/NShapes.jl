@@ -24,7 +24,6 @@ const distance_sq = distance²
 
 # iscollinear(Vector, Vector)
 iscollinear(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D} = isproportional(a, b)
-iscollinear(a::NTuple{3,Number}, b::NTuple{3,Number}) = all(iszero, cross(a, b))
 iscollinear(a::NTuple{2,Number}, b::NTuple{2,Number}) = iszero(det(a, b))
 iscollinear(::NTuple{1,Number}, ::NTuple{1,Number}) = true
 iscollinear(::Tuple{}, ::Tuple{}) = true
