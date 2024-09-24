@@ -200,6 +200,9 @@ println("loading dependencies took $(time() - total_time) seconds")
                 @test p2 ∈ l # last endpoint
                 @test p_inner ∈ l
 
+                @test l != l_0D
+                @test l == l_floated # mixed types
+
                 @test reduce(((acc, a), b) -> (acc &= isparallel(a, b), b), (l_floated, l_flipped, l_parallel, l_extended_start, l_extended_end, l_contained); init=(true, l))[1]
 
                 @test reduce(((acc, a), b) -> (acc &= iscollinear(a, b), b), (l_floated, l_flipped, l_extended_start, l_extended_end, l_contained); init=(true, l))[1]
@@ -212,6 +215,9 @@ println("loading dependencies took $(time() - total_time) seconds")
                 elseif D > 1
                     @test p_non_collinear ∉ l
 
+                    @test l != l_non_collinear
+                    @test l != l_parallel
+
                     @test !isparallel(l, l_non_collinear)
 
                     @test !iscollinear(l, l_non_collinear)
@@ -221,12 +227,27 @@ println("loading dependencies took $(time() - total_time) seconds")
                 if L === Line
                     @test p_before ∈ l
                     @test p_after ∈ l
+
+                    @test l == l_flipped
+                    @test l == l_extended_start
+                    @test l == l_extended_end
+                    @test l == l_contained
                 elseif L === LineSegment
                     @test p_before ∉ l
                     @test p_after ∉ l
+
+                    @test l == l_flipped
+                    @test l != l_extended_start
+                    @test l != l_extended_end
+                    @test l != l_contained
                 elseif L === Ray
                     @test p_before ∉ l
                     @test p_after ∈ l
+
+                    @test l != l_flipped
+                    @test l != l_extended_start
+                    @test l == l_extended_end
+                    @test l != l_contained
                 end
             end
         end
@@ -240,6 +261,10 @@ println("loading dependencies took $(time() - total_time) seconds")
         @test sprint(show, Line((0, 0), (1, 1))) == "<(0, 0)↔(1, 1)>"
         @test sprint(show, LineSegment((0, 0), (1, 1))) == "<(0, 0)―(1, 1)>"
         @test sprint(show, Ray((0, 0), (1, 1))) == "<(0, 0)→(1, 1)>"
+
+        @test Line((), ()) != LineSegment((), ())
+        @test Line((), ()) != Ray((), ())
+        @test LineSegment((), ()) != Ray((), ())
     end
     println("Linear tests took $(time() - linear_time) seconds")
 end
