@@ -43,6 +43,8 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test normalize((1, 1, 1)) == (1 / √3, 1 / √3, 1 / √3) # fractional normalize
         end
         @testset "iscollinear" begin
+            # iscollinear(Vector, Vector)
+
             @test iscollinear((), ()) # always true
             @test iscollinear((1,), (2,)) # always true
 
@@ -56,6 +58,23 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test !iscollinear((1, 2), (2, 3))
             @test !iscollinear((1, 0, -3), (0, 1, 0))
             @test !iscollinear((1.0, 2.0, 3), (2, 4, 5.0))
+
+            # iscollinear(Point, Point, Point)
+
+            # always true for 0D and 1D
+            @test iscollinear((), (), ())
+            @test iscollinear((1,), (2,), (3,))
+
+            @test iscollinear((1, 2), (3, 4), (5, 6))
+            @test iscollinear((1, 2), (3.0, 4.0), (5.0, 6))  # Different types
+            @test iscollinear((1, 0, -3), (-2, 0, 6), (-3, 0, 9))
+            @test iscollinear((4, 4, 4, 4), (1, 1, 1, 1), (-2, -2, -2, -2))
+
+            @test iscollinear((0, 0), (0, 0), (0, 0))
+            @test iscollinear((0, 0, 0, 0), (0, 0, 0, 0), (0, 0, 0, 0))
+
+            @test !iscollinear((1, 2), (3, 4), (5, 7))
+            @test !iscollinear((1, 0, -3), (0, 1, 0), (-3, 0, 1))
         end
         @testset "norm" begin
             @test NShapes.norm(()) ≈ 0 # empty tuple

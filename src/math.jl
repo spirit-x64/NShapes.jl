@@ -23,10 +23,18 @@ const distance_sq = distance²
 @inline normalize(::Tuple{}) = ()
 
 # iscollinear(Vector, Vector)
+
 iscollinear(a::NTuple{D,Number}, b::NTuple{D,Number}) where {D} = isproportional(a, b)
 iscollinear(a::NTuple{2,Number}, b::NTuple{2,Number}) = iszero(det(a, b))
 iscollinear(::NTuple{1,Number}, ::NTuple{1,Number}) = true
 iscollinear(::Tuple{}, ::Tuple{}) = true
+
+# iscollinear(Point, Point, Point)
+
+iscollinear(a::NTuple{D,Number}, b::NTuple{D,Number}, c::NTuple{D,Number}) where {D} = iscollinear(b .- a, c .- a)
+iscollinear(a::NTuple{2,Number}, b::NTuple{2,Number}, c::NTuple{2,Number}) = iszero(det(a, b, c))
+iscollinear(::NTuple{1,Number}, ::NTuple{1,Number}, ::NTuple{1,Number}) = true
+iscollinear(::Tuple{}, ::Tuple{}, ::Tuple{}) = true
 
 # internal usage
 
