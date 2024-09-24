@@ -22,10 +22,10 @@ Space2D = Space{2}
 
 export
     # math
-    distance², distance, normalize, iscollinear,
+    distance², distance, normalize,
     # Linear
     Linear, Line, LineSegment, Ray,
     # functions
-    isparallel
+    iscollinear, isparallel
 
 end

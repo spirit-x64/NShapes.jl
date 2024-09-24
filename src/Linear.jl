@@ -89,3 +89,9 @@ Base.in(::Tuple{}, ::Ray{0}) = true
 isparallel(a::Linear{D}, b::Linear{D}) where {D} = iscollinear(a.point2 .- a.point1, b.point2 .- b.point1)
 isparallel(::Linear{1}, ::Linear{1}) = true
 isparallel(::Linear{0}, ::Linear{0}) = true
+
+# iscollinear(Linear, Linear)
+
+iscollinear(a::Linear{D}, b::Linear{D}) where {D} = iscollinear(a[1], a[2], b[1]) && iscollinear(a[2], b[1], b[2])
+iscollinear(::Linear{1}, ::Linear{1}) = true
+iscollinear(::Linear{0}, ::Linear{0}) = true
