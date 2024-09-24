@@ -21,11 +21,10 @@ Space3D = Space{3}
 Space2D = Space{2}
 
 export
-    # math
-    distance², distance, normalize,
     # Linear
     Linear, Line, LineSegment, Ray,
     # functions
+    distance², distance, normalize,
     iscollinear, isparallel
 
 end

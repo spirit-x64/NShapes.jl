@@ -232,6 +232,8 @@ println("loading dependencies took $(time() - total_time) seconds")
                     @test l == l_extended_start
                     @test l == l_extended_end
                     @test l == l_contained
+
+                    @test distance(l) |> isinf
                 elseif L === LineSegment
                     @test p_before ∉ l
                     @test p_after ∉ l
@@ -240,6 +242,8 @@ println("loading dependencies took $(time() - total_time) seconds")
                     @test l != l_extended_start
                     @test l != l_extended_end
                     @test l != l_contained
+
+                    @test distance(l) == √(sum(p2 .^ 2; init=0))
                 elseif L === Ray
                     @test p_before ∉ l
                     @test p_after ∈ l
@@ -248,6 +252,8 @@ println("loading dependencies took $(time() - total_time) seconds")
                     @test l != l_extended_start
                     @test l == l_extended_end
                     @test l != l_contained
+
+                    @test distance(l) |> isinf
                 end
             end
         end

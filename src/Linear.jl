@@ -93,6 +93,12 @@ function Base.:(==)(a::Ray{D}, b::Ray{D}) where {D}
     a.point1 == b.point1 && iscollinear(a, b)
 end # Two rays are equal if the share the same origin (point1) and the same direction
 
+# distance(Linear)
+
+distance(::Line) = Inf
+distance(l::LineSegment) = distance(l.point1, l.point2)
+distance(::Ray) = Inf
+
 # isparallel(Linear, Linear)
 
 isparallel(a::Linear{D}, b::Linear{D}) where {D} = iscollinear(a.point2 .- a.point1, b.point2 .- b.point1)
