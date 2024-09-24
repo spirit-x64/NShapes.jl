@@ -31,7 +31,7 @@
 
 ## Installation
 ```julia
-using Pkg; Pkg.add("https://github.com/spirit-x64/NShapes.jl")
+using Pkg; Pkg.add(url="https://github.com/spirit-x64/NShapes.jl")
 ```
 
 ## License
