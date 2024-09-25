@@ -107,7 +107,7 @@ Queries
 ├── isintersecting(Shape, Shape)
 ├── isoverlapping(Shape, Shape)
 ├── isdistant(Shape, Shape)
-├── isdegenerate(Linear)
+├── isdegenerate(Linear|Shape)
 ├── iscollinear(Linear, Linear)
 ├── iscollinear(Vector, Vector)
 ├── iscollinear(Point, Point, Point)

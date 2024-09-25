@@ -190,22 +190,29 @@ println("loading dependencies took $(time() - total_time) seconds")
             @test collect(l_0D) == [p_0D, p_0D]
 
             @test p_0D ∈ l_0D
+
+            @test isdegenerate(l_0D)
             for D ∈ 1:4
                 p1, p2 = ntuple(zero, D), ntuple(_ -> 2, D)
                 p_non_collinear, p_inner, p_before, p_after = ntuple(i -> i, D), ntuple(one, D), p1 .- 1, p2 .+ 0.5
-                l, l_floated, l_flipped = L(p1, p2), L(float.(p1), float.(p2)), L(p2, p1)
+                l, l_floated, l_flipped, l_degenerate = L(p1, p2), L(float.(p1), float.(p2)), L(p2, p1), L(p2, p2)
                 l_non_collinear, l_parallel, l_extended_start, l_extended_end, l_contained = L(p1, p_non_collinear), L(p_non_collinear, p_non_collinear .+ 1), L(p_before, p2), L(p1, p_after), L(p1 .+ 0.5, p2 .- 0.5)
 
                 @test p1 ∈ l # first endpoint
                 @test p2 ∈ l # last endpoint
                 @test p_inner ∈ l
+                @test p2 ∈ l_degenerate
 
                 @test l != l_0D
                 @test l == l_floated # mixed types
+                @test l != l_degenerate
 
-                @test reduce(((acc, a), b) -> (acc &= isparallel(a, b), b), (l_floated, l_flipped, l_parallel, l_extended_start, l_extended_end, l_contained); init=(true, l))[1]
+                @test !any(isdegenerate, (l_floated, l_flipped, l_parallel, l_extended_start, l_extended_end, l_contained))
+                @test isdegenerate(l_degenerate)
 
-                @test reduce(((acc, a), b) -> (acc &= iscollinear(a, b), b), (l_floated, l_flipped, l_extended_start, l_extended_end, l_contained); init=(true, l))[1]
+                @test all((i) -> isparallel(l, i), (l_floated, l_flipped, l_degenerate, l_parallel, l_extended_start, l_extended_end, l_contained))
+
+                @test reduce(((acc, a), b) -> (acc &= iscollinear(a, b), b), (l_floated, l_flipped, l_degenerate, l_extended_start, l_extended_end, l_contained); init=(true, l))[1]
 
                 if D == 1 # all points are collinear in 1D
                     @test isparallel(l, l_non_collinear)

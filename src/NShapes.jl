@@ -25,6 +25,6 @@ export
     Linear, Line, LineSegment, Ray,
     # functions
     distance², distance, normalize,
-    iscollinear, isparallel
+    iscollinear, isparallel, isdegenerate
 
 end

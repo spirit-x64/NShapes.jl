@@ -99,6 +99,10 @@ distance(::Line) = Inf
 distance(l::LineSegment) = distance(l.point1, l.point2)
 distance(::Ray) = Inf
 
+# isdegenerate(Linear)
+
+isdegenerate(l::Linear) = l.point1 == l.point2
+
 # isparallel(Linear, Linear)
 
 isparallel(a::Linear{D}, b::Linear{D}) where {D} = iscollinear(a.point2 .- a.point1, b.point2 .- b.point1)
