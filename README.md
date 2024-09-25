@@ -97,7 +97,7 @@ Mesurements
 ├── surface(Shape)
 ├── area(Shape{2})
 ├── perimeter(Shape{2})
-├── length(Linear)
+├── distance(Linear) - Euclidean length
 ├── distance²(Point, Point)
 ├── distance(Point, Point)
 └── normalize(Vector)
