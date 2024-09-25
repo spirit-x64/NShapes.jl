@@ -85,7 +85,7 @@ Base.in(point::NTuple{1,Number}, l::Ray{1}) = l.point1[1] <= point[1]
 Base.in(::Tuple{}, ::Ray{0}) = true
 
 Base.:(==)(::Linear, ::Linear) = false # diff types of Linear or diff dimensions are never equal
-Base.:(==)(a::Line{D}, b::Line{D}) where {D} = iscollinear(a, b) # Two lines are equal if they collinear
+Base.:(==)(a::Line{D}, b::Line{D}) where {D} = isdegenerate(a) ? isdegenerate(b) : !isdegenerate(b) && iscollinear(a, b) # Two lines are equal if they collinear
 function Base.:(==)(a::LineSegment{D}, b::LineSegment{D}) where {D}
     (a.point1 == b.point1 && a.point2 == b.point2) || (a.point1 == b.point2 && a.point2 == b.point1)
 end # Two segments are equal if they share the same endpoints
