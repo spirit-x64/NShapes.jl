@@ -106,27 +106,21 @@ end
             @test p1[D] ∈ l.original[D] # first endpoint
             @test p2[D] ∈ l.original[D] # last endpoint
             @test p_inner[D] ∈ l.original[D]
+
             @test p2[D] ∈ l.degenerate[D]
+            @test p_before[D] ∉ l.degenerate[D]
+            @test p_after[D] ∉ l.degenerate[D]
 
             D > 1 && @test p_non_collinear[D] ∉ l.original[D]
         end
     end
 
     for D ∈ 1:4
-        @test p_before[D] ∈ linears.Line.degenerate[D]
-        @test p_after[D] ∈ linears.Line.degenerate[D]
-
         @test p_before[D] ∈ linears.Line.original[D]
         @test p_after[D] ∈ linears.Line.original[D]
 
-        @test p_before[D] ∉ linears.LineSegment.degenerate[D]
-        @test p_after[D] ∉ linears.LineSegment.degenerate[D]
-
         @test p_before[D] ∉ linears.LineSegment.original[D]
         @test p_after[D] ∉ linears.LineSegment.original[D]
-
-        @test p_before[D] ∈ linears.Ray.degenerate[D]
-        @test p_after[D] ∈ linears.Ray.degenerate[D]
 
         @test p_before[D] ∉ linears.Ray.original[D]
         @test p_after[D] ∈ linears.Ray.original[D]
@@ -209,8 +203,6 @@ end
         @test isparallel(L((), ()), L((), ())) # 0D case
 
         for D ∈ 1:3
-            @test isdegenerate(l.degenerate[D])
-
             for parallel ∈ (l.floated[D], l.mixed[D], l.flipped[D], l.degenerate[D], l.parallel[D], l.extended_start[D], l.extended_end[D], l.contained[D])
                 @test isparallel(l.original[D], parallel)
             end
@@ -229,8 +221,6 @@ end
         @test iscollinear(L((), ()), L((), ())) # 0D case
 
         for D ∈ 1:3
-            @test isdegenerate(l.degenerate[D])
-
             for collinear ∈ (l.floated[D], l.mixed[D], l.flipped[D], l.degenerate[D], l.extended_start[D], l.extended_end[D], l.contained[D])
                 @test iscollinear(l.original[D], collinear)
             end
