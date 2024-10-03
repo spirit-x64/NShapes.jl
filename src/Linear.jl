@@ -65,23 +65,23 @@ function Base.in(point::NTuple{D,Number}, l::Line{D}) where {D}
     t = div_no_inf(dot(point .- l.point1, v), dot(v, v))
     lerp.(l.point1, l.point2, t) == point
 end
-Base.in(point::NTuple{3,Number}, l::Line{3}) = all(iszero, cross(point .- l.point1, l.point2 .- l.point1))
-Base.in(point::NTuple{2,Number}, l::Line{2}) = iszero(det(l.point1, point, l.point2))
-Base.in(::Tuple{Number}, ::Line{1}) = true
+Base.in(point::NTuple{3,Number}, l::Line{3}) = isdegenerate(l) ? point == l.point1 : all(iszero, cross(point .- l.point1, l.point2 .- l.point1))
+Base.in(point::NTuple{2,Number}, l::Line{2}) = isdegenerate(l) ? point == l.point1 : iszero(det(l.point1, point, l.point2))
+Base.in(point::Tuple{Number}, l::Line{1}) = !isdegenerate(l) || point == l.point1
 Base.in(::Tuple{}, ::Line{0}) = true
 function Base.in(point::NTuple{D,Number}, s::LineSegment{D}) where {D}
     v = s.point2 .- s.point1
     t = div_no_inf(dot(point .- s.point1, v), dot(v, v))
     0 <= t <= 1 && lerp.(s.point1, s.point2, t) == point
 end
-Base.in(point::NTuple{1,Number}, l::LineSegment{1}) = 0 <= (point[1] - l.point1[1]) / (l.point2[1] - l.point1[1]) <= 1
+Base.in(point::NTuple{1,Number}, l::LineSegment{1}) = isdegenerate(l) ? point == l.point1 : 0 <= (point[1] - l.point1[1]) / (l.point2[1] - l.point1[1]) <= 1
 Base.in(::Tuple{}, ::LineSegment{0}) = true
 function Base.in(point::NTuple{D,Number}, r::Ray{D}) where {D}
     v = r.point2 .- r.point1
     t = div_no_inf(dot(point .- r.point1, v), dot(v, v))
     t >= 0 && lerp.(r.point1, r.point2, t) == point
 end
-Base.in(point::NTuple{1,Number}, l::Ray{1}) = 0 <= (point[1] - l.point1[1]) / (l.point2[1] - l.point1[1])
+Base.in(point::NTuple{1,Number}, l::Ray{1}) = isdegenerate(l) ? point == l.point1 : 0 <= (point[1] - l.point1[1]) / (l.point2[1] - l.point1[1])
 Base.in(::Tuple{}, ::Ray{0}) = true
 
 Base.:(==)(::Linear, ::Linear) = false # diff types of Linear or diff dimensions are never equal
