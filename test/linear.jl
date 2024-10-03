@@ -106,6 +106,7 @@ end
             @test p1[D] ∈ l.original[D] # first endpoint
             @test p2[D] ∈ l.original[D] # last endpoint
             @test p_inner[D] ∈ l.original[D]
+            @test p_inner[D] ∈ l.flipped[D]
 
             @test p2[D] ∈ l.degenerate[D]
             @test p_before[D] ∉ l.degenerate[D]
