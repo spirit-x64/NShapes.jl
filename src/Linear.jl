@@ -96,8 +96,13 @@ end # Two rays are equal if the share the same origin (point1) and the same dire
 # distance(Linear)
 
 distance(::Line) = Inf
+distance(::Line{0}) = 0
+
 distance(l::LineSegment) = distance(l.point1, l.point2)
+distance(::LineSegment{0}) = 0
+
 distance(::Ray) = Inf
+distance(::Ray{0}) = 0
 
 # isdegenerate(Linear)
 
