@@ -77,20 +77,20 @@ Space{D}
 ## operations:
 ```
 Boolean
-├── union(Shape, Shape) - alias `∪`
-├── intersect(Shape, Shape) - alias `∩`
-├── subtract(Shape, Shape)
-└── difference(Shape, Shape)
+├── union(Linear|Shape, Linear|Shape) - alias `∪`
+├── intersect(Linear|Shape, Linear|Shape) - alias `∩`
+├── subtract(Linear|Shape, Linear|Shape)
+└── difference(Linear|Shape, Linear|Shape)
 
 Transformations
-├── translate(Shape, Translation)
-├── rotate(Shape, Rotation)
-├── scale(Shape, Scaling)
-├── extrude(Shape, Vector, [Taper])
-├── bend(Shape, Vector)
-├── twist(Shape, Vector)
-├── reflect(Shape, Shape)
-└── shear(Shape, Shape)
+├── translate(Linear|Shape, Translation)
+├── rotate(Linear|Shape, Rotation)
+├── scale(Linear|Shape, Scaling)
+├── extrude(Linear|Shape, Vector, [Taper])
+├── bend(Linear|Shape, Vector)
+├── twist(Linear|Shape, Vector)
+├── reflect(Linear|Shape, Shape)
+└── shear(Linear|Shape, Shape)
 
 Mesurements
 ├── volume(Shape)
@@ -103,10 +103,10 @@ Mesurements
 └── normalize(Vector)
 
 Queries
-├── iscontaining(Shape, Shape)
-├── isintersecting(Shape, Shape)
-├── isoverlapping(Shape, Shape)
-├── isdistant(Shape, Shape)
+├── iscontaining(Linear|Shape, Linear|Shape)
+├── isintersecting(Linear|Shape, Linear|Shape)
+├── isoverlapping(Linear|Shape, Linear|Shape)
+├── isdistant(Linear|Shape, Linear|Shape)
 ├── isdegenerate(Linear|Shape)
 ├── iscollinear(Linear, Linear)
 ├── iscollinear(Vector, Vector)
@@ -115,25 +115,25 @@ Queries
 ├── isconvex(Shape)
 ├── isregular(Shape)
 ├── isclockwise(Shape{2})
-├── closestpoint(Shape, Vector)
-├── projection(Shape, Vector)
-├── centroid(Shape)
-└── normal(Shape)
+├── closestpoint(Linear|Shape, Vector)
+├── projection(Linear|Shape, Vector)
+├── centroid(Linear|Shape)
+└── normal(Linear|Shape)
 
 Bounding volumes
 ├── convexhull(Shape)
 ├── boundingbox(Shape)
-└── boundingsphere(Shape)
+└── boundingsphere(Linear|Shape)
 
 Tessellation and Simplification
 ├── simplify(Shape, tolerance)
 ├── decompose(CompositeShape; recursive=false)
 ├── tessellate(Shape, resolution)
-└── voxelize(Shape, resolution) - pixelize(Shape{2}, resolution)
+└── voxelize(Linear|Shape, resolution) - pixelize(Shape{2}, resolution)
 
 Space
-├── ShortestPath(Space, Point, Point)
+├── ShortestPath(Space, Point|Linear|Shape, Point|Linear|Shape)
 ├── collisions(Space)
-├── isvisible(Space, Shape, Point|Linear|Shape)
+├── isvisible(Space, Point|Linear|Shape, Point|Linear|Shape)
 └── visibilitygraph(Space)
 ```
