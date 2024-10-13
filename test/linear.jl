@@ -1,5 +1,5 @@
 p1, p2, p1_floated, p2_floated, p1_mixed, p2_mixed,
-p_inner, p_before, p_after, p_non_collinear = ([] for _ ∈ 1:typemax(Int))
+p_mid, p_before, p_after, p_non_collinear = ([] for _ ∈ 1:typemax(Int))
 
 linears = NamedTuple((i => NamedTuple((i => [] for i ∈ (
     :original, :floated, :mixed, :flipped,
@@ -18,7 +18,7 @@ for D ∈ 1:4
     push!(p1_mixed, (0, float.(_p1[2:end])...))
     push!(p2_mixed, (2, float.(_p2[2:end])...))
 
-    push!(p_inner, ntuple(one, D))
+    push!(p_mid, ntuple(one, D))
     push!(p_before, _p1 .- 1)
     push!(p_after, _p2 .+ 0.5)
 
@@ -105,8 +105,8 @@ end
         for D ∈ 1:4
             @test p1[D] ∈ l.original[D] # first endpoint
             @test p2[D] ∈ l.original[D] # last endpoint
-            @test p_inner[D] ∈ l.original[D]
-            @test p_inner[D] ∈ l.flipped[D]
+            @test p_mid[D] ∈ l.original[D]
+            @test p_mid[D] ∈ l.flipped[D]
 
             @test p2[D] ∈ l.degenerate[D]
             @test p_before[D] ∉ l.degenerate[D]
