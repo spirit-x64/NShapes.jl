@@ -42,8 +42,8 @@ for D ∈ 1:4
         push!(l.non_collinear, L(p1[D], p_non_collinear[D]))
         push!(l.parallel, L(p_non_collinear[D], p_non_collinear[D] .+ 1))
 
-        push!(l.before_collinear, L(p_after, p_after .+ 2))
-        push!(l.after_collinear, L(p_before, p_before .- 2))
+        push!(l.before_collinear, L(p_after[D], p_after[D] .+ 2))
+        push!(l.after_collinear, L(p_before[D], p_before[D] .- 2))
 
         push!(l.extended_start, L(p_before[D], p2[D]))
         push!(l.extended_end, L(p1[D], p_after[D]))
