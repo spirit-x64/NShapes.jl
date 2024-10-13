@@ -4,6 +4,7 @@ p_mid, p_before, p_after, p_non_collinear = ([] for _ ∈ 1:typemax(Int))
 linears = NamedTuple((i => NamedTuple((i => [] for i ∈ (
     :original, :floated, :mixed, :flipped,
     :degenerate, :non_collinear, :parallel,
+    :before_collinear, :after_collinear,
     :contained, :extended_start, :extended_end,
     :first_end, :last_end, :perpendicular,
     :start_perpendicular, :end_perpendicular,
@@ -40,6 +41,9 @@ for D ∈ 1:4
 
         push!(l.non_collinear, L(p1[D], p_non_collinear[D]))
         push!(l.parallel, L(p_non_collinear[D], p_non_collinear[D] .+ 1))
+
+        push!(l.before_collinear, L(p_after, p_after .+ 2))
+        push!(l.after_collinear, L(p_before, p_before .- 2))
 
         push!(l.extended_start, L(p_before[D], p2[D]))
         push!(l.extended_end, L(p1[D], p_after[D]))
