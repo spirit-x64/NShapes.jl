@@ -5,7 +5,9 @@ linears = NamedTuple((i => NamedTuple((i => [] for i ∈ (
     :original, :floated, :mixed, :flipped,
     :degenerate, :non_collinear, :parallel,
     :contained, :extended_start, :extended_end,
-    :first_end, :last_end, :perpendicular
+    :first_end, :last_end, :perpendicular,
+    :start_perpendicular, :end_perpendicular,
+    :before_perpendicular, :after_perpendicular,
 ))) for i ∈ (:Line, :LineSegment, :Ray)))
 
 for D ∈ 1:4
@@ -45,6 +47,11 @@ for D ∈ 1:4
         push!(l.first_end, L(p_before[D], p1[D]))
         push!(l.last_end, L(p2[D], p_after[D]))
         push!(l.perpendicular, L((2, p1[D][2:end]...), (0, p2[D][2:end]...)))
+
+        push!(l.start_perpendicular, L(l.perpendicular[D].point1 .- 1, l.perpendicular[D].point2 .- 1))
+        push!(l.end_perpendicular, L(l.perpendicular[D].point1 .+ 1, l.perpendicular[D].point2 .+ 1))
+        push!(l.before_perpendicular, L(l.perpendicular[D].point1 .- 2, l.perpendicular[D].point2 .- 2))
+        push!(l.after_perpendicular, L(l.perpendicular[D].point1 .+ 2, l.perpendicular[D].point2 .+ 2))
 
         push!(l.contained, L(p1[D] .+ 0.5, p2[D] .- 0.5))
     end
