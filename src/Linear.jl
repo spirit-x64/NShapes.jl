@@ -50,6 +50,8 @@ Base.iterate(l::Linear, i=1) = i > 2 ? nothing : (getfield(l, i), i + 1)
 Base.lastindex(::Linear) = 2
 Base.last(l::Linear) = l.point2
 
+# convert(Type{Linear}, Linear)
+
 Base.convert(::Type{Line}, l::Linear) = Line(l.point1, l.point2)
 Base.convert(::Type{Line{D,T}}, l::Linear{D}) where {D,T<:Number} = Line{D,T}(l.point1, l.point2)
 Base.convert(::Type{Line{D,T}}, l::Line{D,T}) where {D,T<:Number} = l
@@ -59,6 +61,8 @@ Base.convert(::Type{LineSegment{D,T}}, l::LineSegment{D,T}) where {D,T<:Number} 
 Base.convert(::Type{Ray}, l::Linear) = Ray(l.point1, l.point2)
 Base.convert(::Type{Ray{D,T}}, l::Linear{D}) where {D,T<:Number} = Ray{D,T}(l.point1, l.point2)
 Base.convert(::Type{Ray{D,T}}, l::Ray{D,T}) where {D,T<:Number} = l
+
+# in(Point, Linear) - alias `Point ∈ Linear` and `Point ∉ Linear`
 
 function Base.in(point::NTuple{D,Number}, l::Line{D}) where {D}
     v = l.point2 .- l.point1
@@ -83,6 +87,8 @@ function Base.in(point::NTuple{D,Number}, r::Ray{D}) where {D}
 end
 Base.in(point::NTuple{1,Number}, l::Ray{1}) = isdegenerate(l) ? point == l.point1 : 0 <= (point[1] - l.point1[1]) / (l.point2[1] - l.point1[1])
 Base.in(::Tuple{}, ::Ray{0}) = true
+
+# `Linear == Linear`
 
 Base.:(==)(::Linear, ::Linear) = false # diff types of Linear or diff dimensions are never equal
 Base.:(==)(a::Line{D}, b::Line{D}) where {D} = isdegenerate(a) ? isdegenerate(b) : !isdegenerate(b) && iscollinear(a, b) # Two lines are equal if they collinear
